@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/universal
+{
+	"name": "Default Linux Universal",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:focal",
+	"features": {
+		"ghcr.io/devcontainers/features/desktop-lite:1": {
+			"version": "latest",
+			"noVncVersion": "1.2.0",
+			"password": "vscode",
+			"webPort": "6080",
+			"vncPort": "5901"
+		},
+		"ghcr.io/devcontainers/features/python:1": {}
+	},
+
+	"forwardPorts": [6080, 5901],
+	"portsAttributes": {
+	  "6080": {
+		"label": "desktop",
+		"onAutoForward": "openPreview"
+	  }
+	},
+
+	// increase the size of the shared memory space allocated to your container
+	// for x/vnc
+	"runArgs": ["--shm-size=1g"],
+
+	"postCreateCommand": "./setup.sh",
+	"postAttachCommand": "nohup bash -c '/usr/bin/sense_emu_gui &'"
+}
